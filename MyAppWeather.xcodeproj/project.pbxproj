@@ -20,6 +20,7 @@
 		2E4DE95528605C8800FF494D /* City.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E4DE95428605C8800FF494D /* City.json */; };
 		2E4DE95E28605D6C00FF494D /* DailyDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4DE95D28605D6C00FF494D /* DailyDateTableViewCell.swift */; };
 		2E4DE96028605D7400FF494D /* DailyDateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E4DE95F28605D7400FF494D /* DailyDateTableViewCell.xib */; };
+		2E5C44BF2862CCB60049145A /* Cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E5C44BE2862CCB60049145A /* Cities.json */; };
 		2E679B54286058CF00FBDB8F /* RealmItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E679B51286058CF00FBDB8F /* RealmItem.swift */; };
 		2E679B55286058CF00FBDB8F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E679B52286058CF00FBDB8F /* SearchViewController.swift */; };
 		2E679B56286058CF00FBDB8F /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E679B53286058CF00FBDB8F /* PageViewController.swift */; };
@@ -47,6 +48,7 @@
 		2E4DE95428605C8800FF494D /* City.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = City.json; path = ../../WeatherApp/Weather/City/City.json; sourceTree = "<group>"; };
 		2E4DE95D28605D6C00FF494D /* DailyDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyDateTableViewCell.swift; sourceTree = "<group>"; };
 		2E4DE95F28605D7400FF494D /* DailyDateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DailyDateTableViewCell.xib; sourceTree = "<group>"; };
+		2E5C44BE2862CCB60049145A /* Cities.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Cities.json; sourceTree = "<group>"; };
 		2E679B51286058CF00FBDB8F /* RealmItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmItem.swift; sourceTree = "<group>"; };
 		2E679B52286058CF00FBDB8F /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		2E679B53286058CF00FBDB8F /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				2E8CBCE928602884008398E4 /* Assets.xcassets */,
 				2E8CBCEB28602884008398E4 /* LaunchScreen.storyboard */,
 				2E8CBCEE28602884008398E4 /* Info.plist */,
+				2E5C44BE2862CCB60049145A /* Cities.json */,
 			);
 			path = MyAppWeather;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 				2E4DE95528605C8800FF494D /* City.json in Resources */,
 				2E8CBCED28602884008398E4 /* LaunchScreen.storyboard in Resources */,
 				2E8CBCEA28602884008398E4 /* Assets.xcassets in Resources */,
+				2E5C44BF2862CCB60049145A /* Cities.json in Resources */,
 				2E8CBCE828602882008398E4 /* Main.storyboard in Resources */,
 				2E4DE94328605BE500FF494D /* HourCollectionViewCell.xib in Resources */,
 				2E4DE94528605BE500FF494D /* SearchTableViewCell.xib in Resources */,

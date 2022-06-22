@@ -25,7 +25,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate {
         super.viewDidLoad()
 
         searchBar.delegate = self
-        cities = loadJson(filename: "City")!
+        cities = loadJson(filename: "Cities")!
         // Do any additional setup after loading the view.
         configBlur()
         configTop()
