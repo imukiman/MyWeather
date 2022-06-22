@@ -17,7 +17,6 @@
 		2E4DE94F28605C0F00FF494D /* DailyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4DE94B28605C0F00FF494D /* DailyWeather.swift */; };
 		2E4DE95228605C3D00FF494D /* ExtensionFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4DE95028605C3D00FF494D /* ExtensionFormat.swift */; };
 		2E4DE95328605C3D00FF494D /* ExtensionColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4DE95128605C3D00FF494D /* ExtensionColor.swift */; };
-		2E4DE95528605C8800FF494D /* City.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E4DE95428605C8800FF494D /* City.json */; };
 		2E4DE95E28605D6C00FF494D /* DailyDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4DE95D28605D6C00FF494D /* DailyDateTableViewCell.swift */; };
 		2E4DE96028605D7400FF494D /* DailyDateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E4DE95F28605D7400FF494D /* DailyDateTableViewCell.xib */; };
 		2E5C44BF2862CCB60049145A /* Cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E5C44BE2862CCB60049145A /* Cities.json */; };
@@ -45,7 +44,6 @@
 		2E4DE94B28605C0F00FF494D /* DailyWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyWeather.swift; sourceTree = "<group>"; };
 		2E4DE95028605C3D00FF494D /* ExtensionFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionFormat.swift; sourceTree = "<group>"; };
 		2E4DE95128605C3D00FF494D /* ExtensionColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionColor.swift; sourceTree = "<group>"; };
-		2E4DE95428605C8800FF494D /* City.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = City.json; path = ../../WeatherApp/Weather/City/City.json; sourceTree = "<group>"; };
 		2E4DE95D28605D6C00FF494D /* DailyDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyDateTableViewCell.swift; sourceTree = "<group>"; };
 		2E4DE95F28605D7400FF494D /* DailyDateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DailyDateTableViewCell.xib; sourceTree = "<group>"; };
 		2E5C44BE2862CCB60049145A /* Cities.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Cities.json; sourceTree = "<group>"; };
@@ -156,7 +154,6 @@
 				2E4DE95628605CA800FF494D /* Model */,
 				2E8CBCE028602882008398E4 /* AppDelegate.swift */,
 				2E8CBCE228602882008398E4 /* SceneDelegate.swift */,
-				2E4DE95428605C8800FF494D /* City.json */,
 				2E8CBCE628602882008398E4 /* Main.storyboard */,
 				2E8CBCE928602884008398E4 /* Assets.xcassets */,
 				2E8CBCEB28602884008398E4 /* LaunchScreen.storyboard */,
@@ -235,7 +232,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E4DE96028605D7400FF494D /* DailyDateTableViewCell.xib in Resources */,
-				2E4DE95528605C8800FF494D /* City.json in Resources */,
 				2E8CBCED28602884008398E4 /* LaunchScreen.storyboard in Resources */,
 				2E8CBCEA28602884008398E4 /* Assets.xcassets in Resources */,
 				2E5C44BF2862CCB60049145A /* Cities.json in Resources */,
