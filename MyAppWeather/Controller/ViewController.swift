@@ -118,7 +118,7 @@ class ViewController: UIViewController {
         lbl_tempS.translatesAutoresizingMaskIntoConstraints = false
         lbl_tempS.centerYAnchor.constraint(equalTo: view_lbl.centerYAnchor, constant: 0).isActive = true
         lbl_tempS.centerXAnchor.constraint(equalTo: view_lbl.centerXAnchor, constant: 0).isActive = true
-        lbl_tempS.text = "none"
+        lbl_tempS.text = "none."
         lbl_tempS.textColor = .white
         lbl_tempS.font = UIFont.systemFont(ofSize: 60, weight: .bold)
         
