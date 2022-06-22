@@ -153,8 +153,8 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = Location()
         item.name = searchCities[indexPath.row].name
-        item.lat = searchCities[indexPath.row].lat.formatStringToDouble()
-        item.lng = searchCities[indexPath.row].lng.formatStringToDouble()
+        item.lat = searchCities[indexPath.row].lat
+        item.lng = searchCities[indexPath.row].lng
         
         let boolCreated = DBManage.shareInstance.checkPrimaryKey(location: item)
         if boolCreated == true{

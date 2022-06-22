@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     var contentView = UIView()
     var uiView_Top = UIView()
     var uiView_Top_Bar = UIView()
+    var language : String = ""
   
     var lbl_location = UILabel()
     var stackView = UIStackView()
@@ -38,68 +39,50 @@ class ViewController: UIViewController {
     var img_humidity = UIImageView()
     var img_wind = UIImageView()
     
-    var width_stat1 = NSLayoutConstraint()
-    var height_stat1 = NSLayoutConstraint()
-    var width_stat2 = NSLayoutConstraint()
-    var height_stat2 = NSLayoutConstraint()
-    var urlApiHour = ""
     var gradient = CAGradientLayer()
     var name_location = "none"
     
-    var my_latitude : Double = 0
-    var my_longitude : Double = 0
-    let your_language = "vi" //tieng viet
+    var my_latitude : String = ""
+    var my_longitude : String = ""
+
     // 2 số này la vĩ độ và kinh độ địa điểm, sau này có apy lấy vị trí tự động từ google thì thay đổi sau
     var cnt = 8 // day la so ngay ma ban muon hienj thi tu 1 - 16
     var urlApiCurrent : String = ""
     var urlApiDaily : String = ""
+    var urlApiHour = ""
     var dataDaily = [ListD]()
     var dataHour = [ListH]()
     var tableView = UITableView()
-    var heightTable = NSLayoutConstraint()
-    
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
+        language = Locale(identifier: Locale.preferredLanguages[0]).languageCode!
         configUiTop()
         configStackView()
         configScrollView()
         configCollectionView()
         configTableView()
-        urlApiHour = "https://api.openweathermap.org/data/2.5/forecast?lat=\(my_latitude)&lon=\(my_longitude)&lang=\(your_language)&cnt=20&appid=\(AppDelegate.myKeyApi1)"
-
-        urlApiDaily = "https://api.openweathermap.org/data/2.5/forecast/daily?lat=\(my_latitude)&lon=\(my_longitude)&lang=\(your_language)&cnt=\(cnt)&appid=\(AppDelegate.myKeyApi1)"
-        urlApiCurrent = "https://api.openweathermap.org/data/2.5/weather?lat=\(my_latitude)&lon=\(my_longitude)&lang=\(your_language)&appid=\(AppDelegate.myKeyApi1)"
+        urlApiHour = "https://api.openweathermap.org/data/2.5/forecast?lat=\(my_latitude)&lon=\(my_longitude)&lang=\(language)&cnt=20&appid=\(AppDelegate.myKeyApi1)"
+        urlApiDaily = "https://api.openweathermap.org/data/2.5/forecast/daily?lat=\(my_latitude)&lon=\(my_longitude)&lang=\(language)&cnt=\(cnt)&appid=\(AppDelegate.myKeyApi1)"
+        urlApiCurrent = "https://api.openweathermap.org/data/2.5/weather?lat=\(my_latitude)&lon=\(my_longitude)&lang=\(language)&appid=\(AppDelegate.myKeyApi1)"
         loadJson()
-        
     }
     
     func configUiTop(){
         
         view.addSubview(uiView_Top)
         uiView_Top.translatesAutoresizingMaskIntoConstraints = false
-        uiView_Top.layer.cornerRadius = 10
         uiView_Top.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 0).isActive = true
         uiView_Top.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         uiView_Top.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         
-        uiView_Top.addSubview(uiView_Top_Bar)
-        uiView_Top_Bar.translatesAutoresizingMaskIntoConstraints = false
-        uiView_Top_Bar.topAnchor.constraint(equalTo: uiView_Top.topAnchor, constant: 10).isActive = true
-        uiView_Top_Bar.leadingAnchor.constraint(equalTo: uiView_Top.leadingAnchor, constant: 0).isActive = true
-        uiView_Top_Bar.trailingAnchor.constraint(equalTo: uiView_Top.trailingAnchor, constant: 0).isActive = true
-        uiView_Top_Bar.addSubview(lbl_location)
-    
+        uiView_Top.addSubview(lbl_location)
         lbl_location.translatesAutoresizingMaskIntoConstraints = false
-        lbl_location.topAnchor.constraint(equalTo: uiView_Top_Bar.topAnchor,constant: 0).isActive = true
-        lbl_location.centerXAnchor.constraint(equalTo: uiView_Top_Bar.centerXAnchor, constant: 0).isActive = true
-        lbl_location.bottomAnchor.constraint(equalTo: uiView_Top_Bar.bottomAnchor, constant: 0).isActive = true
+        lbl_location.topAnchor.constraint(equalTo: uiView_Top.topAnchor,constant: 0).isActive = true
+        lbl_location.centerXAnchor.constraint(equalTo: uiView_Top.centerXAnchor, constant: 0).isActive = true
         lbl_location.text = name_location
-        lbl_location.heightAnchor.constraint(equalToConstant: 30).isActive = true
         lbl_location.textColor = .white
         lbl_location.font = .boldSystemFont(ofSize: 30)
-        
-       
     }
     
     func configStackView(){
@@ -108,7 +91,7 @@ class ViewController: UIViewController {
         stackView.distribution = .fillProportionally
       
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.topAnchor.constraint(equalTo: uiView_Top_Bar.bottomAnchor,constant: 10).isActive = true
+        stackView.topAnchor.constraint(equalTo: lbl_location.bottomAnchor,constant: 0).isActive = true
         stackView.leadingAnchor.constraint(equalTo: uiView_Top.leadingAnchor, constant: 0).isActive = true
         stackView.trailingAnchor.constraint(equalTo: uiView_Top.trailingAnchor, constant: 0).isActive = true
         stackView.addArrangedSubview(img_statS)
@@ -116,13 +99,12 @@ class ViewController: UIViewController {
         img_statS.translatesAutoresizingMaskIntoConstraints = false
         img_statS.contentMode = .scaleAspectFit
         img_statS.image = UIImage(named: "01d")
-        height_stat1 = img_statS.heightAnchor.constraint(equalToConstant:  self.view.bounds.width - 180)
-        height_stat1.isActive = true
+        img_statS.heightAnchor.constraint(equalToConstant:  self.view.bounds.width - 180).isActive = true
 
         stackView.addArrangedSubview(view_lbl)
         view_lbl.translatesAutoresizingMaskIntoConstraints = false
-        view_lbl.heightAnchor.constraint(equalToConstant: 100).isActive = true
-
+        view_lbl.heightAnchor.constraint(equalToConstant: view.bounds.width/4).isActive = true
+    
         view_lbl.addSubview(lbl_dateS)
         lbl_dateS.translatesAutoresizingMaskIntoConstraints = false
         lbl_dateS.topAnchor.constraint(equalTo: view_lbl.topAnchor, constant: 0).isActive = true
@@ -139,7 +121,6 @@ class ViewController: UIViewController {
         lbl_tempS.text = "none"
         lbl_tempS.textColor = .white
         lbl_tempS.font = UIFont.systemFont(ofSize: 60, weight: .bold)
-        lbl_tempS.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         view_lbl.addSubview(lbl_statS)
         lbl_statS.translatesAutoresizingMaskIntoConstraints = false
@@ -272,11 +253,13 @@ class ViewController: UIViewController {
         scrollView.delegate = self
         scrollView.addSubview(contentView)
         scrollView.bounces = true
+        
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.topAnchor.constraint(equalTo: scrollView.topAnchor,constant: 0).isActive = true
         contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0).isActive = true
         contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0).isActive = true
         contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0).isActive = true
+        contentView.heightAnchor.constraint(equalToConstant: view.bounds.height - 300).isActive = true
         contentView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 0).isActive = true
     }
     
@@ -293,22 +276,13 @@ class ViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0).isActive = true
         tableView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0).isActive = true
         tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
-        heightTable = tableView.heightAnchor.constraint(equalToConstant: 400)
-        heightTable.isActive = true
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "DailyDateTableViewCell", bundle: nil), forCellReuseIdentifier: "cellTDay")
         
 
     }
-    override func viewDidAppear(_ animated: Bool) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [self] in
-            self.heightTable.isActive = false
-            self.tableView.heightAnchor.constraint(equalToConstant: self.tableView.contentSize.height).isActive = true
-        }
-    }
     func loadJson(){
-        print(urlApiCurrent)
         let queue = DispatchGroup()
         queue.enter()
         URLSession.shared.dataTask(with: URL(string: urlApiDaily)!) { data, response, errors in
@@ -346,8 +320,8 @@ class ViewController: UIViewController {
         URLSession.shared.dataTask(with: URL(string: urlApiCurrent)!) { data, response, errors in
             do{
                 let dataC = try? JSONDecoder().decode(CurrentWeather.self, from: data!)
+                self.dataCurrent = dataC
                 DispatchQueue.main.async {
-                    self.dataCurrent = dataC
                     self.configUI(self.dataCurrent!)
                 }
             }
@@ -391,8 +365,9 @@ extension ViewController: UIScrollViewDelegate{
                 self.stackView.transform = CGAffineTransform(scaleX: 1, y: 1)
                 self.stackView.axis = .horizontal
                 self.stackView.distribution = .fillEqually
+                self.view_lbl.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             } completion: { _ in
-               
+                
             }
         }
         else{
@@ -402,7 +377,9 @@ extension ViewController: UIScrollViewDelegate{
                     self.stackView.transform = .identity
                     self.stackView.axis = .vertical
                     self.stackView.distribution = .fillProportionally
-                    self.height_stat1.isActive = true
+                    self.view_lbl.transform = .identity
+                } completion: { _ in
+                    
                 }
             }
         }
@@ -416,7 +393,6 @@ extension ViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellTDay") as! DailyDateTableViewCell
         cell.setList(dataDaily[indexPath.row + 1])
-
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         return cell

@@ -10,8 +10,8 @@ import RealmSwift
 
 class Location: Object {
     @Persisted(primaryKey: true) var name: String
-    @Persisted var lat: Double
-    @Persisted var lng: Double
+    @Persisted var lat: String
+    @Persisted var lng: String
 }
 class ArrayLocations: Object {
     var locations = List<Location>()
