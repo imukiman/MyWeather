@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E3652692863009400878538 /* AllLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3652682863009400878538 /* AllLocationsViewController.swift */; };
+		2E36526C2863092300878538 /* AllLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E36526A2863092300878538 /* AllLocationTableViewCell.swift */; };
+		2E36526D2863092300878538 /* AllLocationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E36526B2863092300878538 /* AllLocationTableViewCell.xib */; };
 		2E4DE94328605BE500FF494D /* HourCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E4DE93D28605BE500FF494D /* HourCollectionViewCell.xib */; };
 		2E4DE94428605BE500FF494D /* HourCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4DE93E28605BE500FF494D /* HourCollectionViewCell.swift */; };
 		2E4DE94528605BE500FF494D /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E4DE93F28605BE500FF494D /* SearchTableViewCell.xib */; };
@@ -34,6 +37,9 @@
 
 /* Begin PBXFileReference section */
 		215467BFC05A0CF5EE89051F /* Pods_MyAppWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyAppWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E3652682863009400878538 /* AllLocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLocationsViewController.swift; sourceTree = "<group>"; };
+		2E36526A2863092300878538 /* AllLocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLocationTableViewCell.swift; sourceTree = "<group>"; };
+		2E36526B2863092300878538 /* AllLocationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllLocationTableViewCell.xib; sourceTree = "<group>"; };
 		2E4DE93D28605BE500FF494D /* HourCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HourCollectionViewCell.xib; sourceTree = "<group>"; };
 		2E4DE93E28605BE500FF494D /* HourCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourCollectionViewCell.swift; sourceTree = "<group>"; };
 		2E4DE93F28605BE500FF494D /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
@@ -101,6 +107,7 @@
 				2E8CBCE428602882008398E4 /* ViewController.swift */,
 				2E679B53286058CF00FBDB8F /* PageViewController.swift */,
 				2E679B52286058CF00FBDB8F /* SearchViewController.swift */,
+				2E3652682863009400878538 /* AllLocationsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -114,6 +121,8 @@
 				2E4DE93D28605BE500FF494D /* HourCollectionViewCell.xib */,
 				2E4DE94128605BE500FF494D /* SearchTableViewCell.swift */,
 				2E4DE93F28605BE500FF494D /* SearchTableViewCell.xib */,
+				2E36526A2863092300878538 /* AllLocationTableViewCell.swift */,
+				2E36526B2863092300878538 /* AllLocationTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -233,6 +242,7 @@
 			files = (
 				2E4DE96028605D7400FF494D /* DailyDateTableViewCell.xib in Resources */,
 				2E8CBCED28602884008398E4 /* LaunchScreen.storyboard in Resources */,
+				2E36526D2863092300878538 /* AllLocationTableViewCell.xib in Resources */,
 				2E8CBCEA28602884008398E4 /* Assets.xcassets in Resources */,
 				2E5C44BF2862CCB60049145A /* Cities.json in Resources */,
 				2E8CBCE828602882008398E4 /* Main.storyboard in Resources */,
@@ -300,10 +310,12 @@
 				2E679B56286058CF00FBDB8F /* PageViewController.swift in Sources */,
 				2E4DE94C28605C0F00FF494D /* HourWeather.swift in Sources */,
 				2E4DE95228605C3D00FF494D /* ExtensionFormat.swift in Sources */,
+				2E36526C2863092300878538 /* AllLocationTableViewCell.swift in Sources */,
 				2E4DE94428605BE500FF494D /* HourCollectionViewCell.swift in Sources */,
 				2E679B54286058CF00FBDB8F /* RealmItem.swift in Sources */,
 				2E8CBCE328602882008398E4 /* SceneDelegate.swift in Sources */,
 				2E4DE95328605C3D00FF494D /* ExtensionColor.swift in Sources */,
+				2E3652692863009400878538 /* AllLocationsViewController.swift in Sources */,
 				2E4DE95E28605D6C00FF494D /* DailyDateTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

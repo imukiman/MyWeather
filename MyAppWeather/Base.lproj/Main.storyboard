@@ -12,10 +12,12 @@
         <!--Page View Controller-->
         <scene sceneID="OgK-ay-kM8">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="uUq-Ca-AR9" customClass="PageViewController" customModule="MyAppWeather" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="uUq-Ca-AR9" customClass="PageViewController" customModule="MyAppWeather" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="nlH-9B-c1P"/>
+                </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmj-7W-P80" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-881" y="35"/>
+            <point key="canvasLocation" x="28.985507246376812" y="34.821428571428569"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -30,7 +32,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="30" y="84"/>
+            <point key="canvasLocation" x="692.75362318840587" y="34.821428571428569"/>
+        </scene>
+        <!--All Locations View Controller-->
+        <scene sceneID="9mn-cw-8bv">
+            <objects>
+                <viewController id="xgY-nQ-M3Y" customClass="AllLocationsViewController" customModule="MyAppWeather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rdM-Gy-6QF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="lzr-Sh-TAt"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SpU-Ce-3Jc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1447.8260869565217" y="34.821428571428569"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="Ug5-ZM-SGv">
@@ -45,7 +62,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oL6-gh-j4G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="671" y="84"/>
+            <point key="canvasLocation" x="2345" y="35"/>
         </scene>
     </scenes>
     <resources>

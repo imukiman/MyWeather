@@ -82,7 +82,14 @@ class SearchViewController: UIViewController,UISearchBarDelegate {
     }
     
     @objc func exit_bt(){
+        resetSearch()
         dismiss(animated: true)
+    }
+    
+    func resetSearch(){
+        searchCities = []
+        searchBar.text = ""
+        tableView.reloadData()
     }
     
     fileprivate func configBlur(){
@@ -112,6 +119,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.tableFooterView = UIView()
         tableView.backgroundColor = .clear
         tableView.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 5).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
@@ -156,12 +164,9 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
         item.lat = searchCities[indexPath.row].lat
         item.lng = searchCities[indexPath.row].lng
         
-        let boolCreated = DBManage.shareInstance.checkPrimaryKey(location: item)
-        if boolCreated == true{
-            let data = DBManage.shareInstance.readData()
-            UserDefaults.standard.set(data.count - 1, forKey: "pages")
-        }
+        DBManage.shareInstance.checkPrimaryKey(location: item)
         delegateSearch?.changeData()
+        resetSearch()
         dismiss(animated: true)
     }
 }

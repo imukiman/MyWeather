@@ -13,7 +13,7 @@ class PageViewController: UIPageViewController {
     var ViewBottom = UIView()
     var viewBarButton = UIView()
     var gradient = CAGradientLayer()
-    var bt_add = UIButton()
+    var bt_search = UIButton()
     var bt_menu = UIButton()
     var lineV = UIView()
     var viewContent = UIView()
@@ -26,6 +26,10 @@ class PageViewController: UIPageViewController {
         delegate = self
         configBackground()
         configUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        createArrayAnswer()
     }
     
     fileprivate func configBackground(){
@@ -68,14 +72,15 @@ class PageViewController: UIPageViewController {
         bt_menu.heightAnchor.constraint(equalToConstant: 30).isActive = true
         bt_menu.setBackgroundImage(UIImage(named: "menu"), for: .normal)
         
-        viewBarButton.addSubview(bt_add)
-        bt_add.translatesAutoresizingMaskIntoConstraints = false
-        bt_add.trailingAnchor.constraint(equalTo: viewBarButton.trailingAnchor,constant: -16).isActive = true
-        bt_add.topAnchor.constraint(equalTo: viewBarButton.topAnchor,constant: 0).isActive = true
-        bt_add.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        bt_add.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        bt_add.setBackgroundImage(UIImage(named: "add"), for: .normal)
-        bt_add.addTarget(self, action: #selector(searchLocation), for: .touchUpInside)
+        viewBarButton.addSubview(bt_search)
+        bt_search.translatesAutoresizingMaskIntoConstraints = false
+        bt_search.trailingAnchor.constraint(equalTo: viewBarButton.trailingAnchor,constant: -16).isActive = true
+        bt_search.topAnchor.constraint(equalTo: viewBarButton.topAnchor,constant: 0).isActive = true
+        bt_search.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        bt_search.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        bt_search.setBackgroundImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        bt_search.tintColor = .white
+        bt_search.addTarget(self, action: #selector(searchLocation), for: .touchUpInside)
         
         view.addSubview(lineV)
         lineV.translatesAutoresizingMaskIntoConstraints = false
@@ -99,17 +104,15 @@ class PageViewController: UIPageViewController {
             view.name_location = data[i].name
             pages.append(view)
         }
-        currenPage = UserDefaults.standard.integer(forKey: "pages") ?? 0
+        currenPage = UserDefaults.standard.integer(forKey: "pages")
         setViewControllers([pages[currenPage]], direction: .forward, animated: false, completion: nil)
     }
-    override func viewDidAppear(_ animated: Bool) {
-        print(1)
-        createArrayAnswer()
-    }
+    
     
     @objc func searchLocation(){
-        let vc = SearchViewController()
-        vc.delegateSearch = self
+        let vc = AllLocationsViewController()
+        vc.modalPresentationStyle = .fullScreen
+        //vc.delegateSearch = self
         present(vc, animated: true)
     }
   
@@ -169,11 +172,6 @@ extension PageViewController: UIPageViewControllerDelegate {
         }, completion: nil)
     }
     
-}
-extension PageViewController: SearchDelegate{
-    func changeData() {
-        self.createArrayAnswer()
-    }
 }
 
 
