@@ -79,9 +79,12 @@ class ViewController: UIViewController {
         uiView_Top.addSubview(lbl_location)
         lbl_location.translatesAutoresizingMaskIntoConstraints = false
         lbl_location.topAnchor.constraint(equalTo: uiView_Top.topAnchor,constant: 0).isActive = true
-        lbl_location.centerXAnchor.constraint(equalTo: uiView_Top.centerXAnchor, constant: 0).isActive = true
+        lbl_location.leadingAnchor.constraint(equalTo: uiView_Top.leadingAnchor, constant: 16).isActive = true
+        lbl_location.trailingAnchor.constraint(equalTo: uiView_Top.trailingAnchor, constant: -16).isActive = true
+        lbl_location.textAlignment = .center
         lbl_location.text = name_location
         lbl_location.textColor = .white
+        lbl_location.numberOfLines = 0
         lbl_location.font = .boldSystemFont(ofSize: 30)
     }
     

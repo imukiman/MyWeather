@@ -11,13 +11,14 @@ protocol AllLocationDelegate{
     func clickDelegate(pages: Int)
 }
 class AllLocationsViewController: UIViewController {
-    var allLocation = [Location]()
+    var allLocation = [Cities]()
     var tableView = UITableView()
     var add_bt = UIButton()
     var viewContent = UIView()
     var gradient = CAGradientLayer()
     let vc = SearchViewController()
     var delegate : AllLocationDelegate?
+    var edit_bt = UIButton()
     override func viewDidLoad() {
         super.viewDidLoad()
         configUi()
@@ -29,8 +30,9 @@ class AllLocationsViewController: UIViewController {
     func datainTableView(){
         allLocation = []
         let data = DBManage.shareInstance.readData()
-        for i in data{
-            allLocation.append(i)
+        for i in 0..<data.count{
+            let data = Cities(name: data[i].name, lat: data[i].lat, lng: data[i].lng)
+            allLocation.append(data)
         }
         tableView.reloadData()
     }
@@ -58,9 +60,18 @@ class AllLocationsViewController: UIViewController {
         add_bt.setBackgroundImage(UIImage(named: "add"), for: .normal)
         add_bt.addTarget(self, action: #selector(addLocation), for: .touchUpInside)
         
+        viewContent.addSubview(edit_bt)
+        edit_bt.translatesAutoresizingMaskIntoConstraints = false
+        edit_bt.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor,constant: 16).isActive = true
+        edit_bt.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 0).isActive = true
+        edit_bt.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        edit_bt.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        edit_bt.setTitle("Edit", for: .normal)
+        edit_bt.addTarget(self, action: #selector(edit_Button), for: .touchUpInside)
+        
         viewContent.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: add_bt.bottomAnchor, constant: 5).isActive = true
+        tableView.topAnchor.constraint(equalTo: edit_bt.bottomAnchor, constant: 5).isActive = true
         tableView.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 16).isActive = true
         tableView.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: -16).isActive = true
         tableView.bottomAnchor.constraint(equalTo: viewContent.bottomAnchor, constant: 0).isActive = true
@@ -73,6 +84,19 @@ class AllLocationsViewController: UIViewController {
     @objc func addLocation(){
         vc.delegateSearch = self
         present(vc, animated: true)
+    }
+    
+    @objc func edit_Button(_ sender: UIButton){
+        if !sender.isSelected {
+            sender.isSelected = !sender.isSelected
+            edit_bt.setTitle("Done", for: .normal)
+            tableView.isEditing = true
+        }
+        else{
+            sender.isSelected = !sender.isSelected
+            edit_bt.setTitle("Edit", for: .normal)
+            tableView.isEditing = false
+        }
     }
 }
 
@@ -103,6 +127,27 @@ extension AllLocationsViewController: UITableViewDelegate,UITableViewDataSource{
             deleteAction.backgroundColor = .red
             let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
             return configuration
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+            return true
+        }
+        
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // Đổi vị trí của 2 phần tử contact trong mảng dataSource contacts
+        allLocation.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        DBManage.shareInstance.deleteAllObject()
+        swapItem()
+    }
+    
+    func swapItem(){
+        for i in 0..<allLocation.count{
+            let data = Location()
+            data.name = allLocation[i].name
+            data.lat = allLocation[i].lat
+            data.lng = allLocation[i].lng
+            DBManage.shareInstance.addData(data)
+        }
     }
 }
 

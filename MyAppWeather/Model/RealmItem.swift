@@ -14,7 +14,7 @@ class Location: Object {
     @Persisted var lng: String
 }
 class ArrayLocations: Object {
-    var locations = List<Location>()
+    let locations = List<Location>()
 }
 
 class DBManage{

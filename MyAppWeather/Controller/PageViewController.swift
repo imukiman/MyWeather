@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class PageViewController: UIPageViewController {
     var pages = [UIViewController]()
