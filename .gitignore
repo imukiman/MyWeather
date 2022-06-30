@@ -1,1 +1,4 @@
 Pods/
+Model/HourWeather.swift
+Model/DailyWeather.swift
+Model/CurrentWeather.swift
