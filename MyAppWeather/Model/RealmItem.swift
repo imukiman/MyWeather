@@ -11,7 +11,7 @@ import RealmSwift
 class Location: Object {
     @Persisted(primaryKey: true) var name: String
     @Persisted var lat: String
-    @Persisted var lng: String
+    @Persisted var lon: String
 }
 class ArrayLocations: Object {
     let locations = List<Location>()
@@ -64,7 +64,7 @@ class DBManage{
         do {
             let realm = try Realm()
             let object = realm.objects(Location.self).filter("name = %@", location.name)
-            guard let check = object.first else{
+            guard object.first != nil else{
                 try! realm.write({
                     realm.add(location)
                 })

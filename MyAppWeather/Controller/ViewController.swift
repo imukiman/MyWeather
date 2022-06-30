@@ -10,7 +10,7 @@ import RealmSwift
 class ViewController: UIViewController {
     
 //outlets
-    var dataCurrent : CurrentWeather?
+    var dataCurrent : Current?
     var scrollView = UIScrollView()
     var contentView = UIView()
     var uiView_Top = UIView()
@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     var view_stats = UIView()
     var scrollBool = true
     var lineV = UIView()
+    var timeZone = ""
     var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
     var lbl_pressure = UILabel()
@@ -47,11 +48,9 @@ class ViewController: UIViewController {
 
     // 2 số này la vĩ độ và kinh độ địa điểm, sau này có apy lấy vị trí tự động từ google thì thay đổi sau
     var cnt = 8 // day la so ngay ma ban muon hienj thi tu 1 - 16
-    var urlApiCurrent : String = ""
-    var urlApiDaily : String = ""
-    var urlApiHour = ""
-    var dataDaily = [ListD]()
-    var dataHour = [ListH]()
+    var urlApi : String = ""
+    var dataDaily = [Daily]()
+    var dataHour = [Hourly]()
     var tableView = UITableView()
   
     override func viewDidLoad() {
@@ -62,14 +61,13 @@ class ViewController: UIViewController {
         configScrollView()
         configCollectionView()
         configTableView()
-        urlApiHour = "https://api.openweathermap.org/data/2.5/forecast?lat=\(my_latitude)&lon=\(my_longitude)&lang=\(language)&cnt=20&appid=\(AppDelegate.myKeyApi1)"
-        urlApiDaily = "https://api.openweathermap.org/data/2.5/forecast/daily?lat=\(my_latitude)&lon=\(my_longitude)&lang=\(language)&cnt=\(cnt)&appid=\(AppDelegate.myKeyApi1)"
-        urlApiCurrent = "https://api.openweathermap.org/data/2.5/weather?lat=\(my_latitude)&lon=\(my_longitude)&lang=\(language)&appid=\(AppDelegate.myKeyApi1)"
+        urlApi = "https://api.openweathermap.org/data/2.5/onecall?lat=\(my_latitude)&lon=\(my_longitude)&lang=vi&appid=\(AppDelegate.myKeyApi1)"
+        print(urlApi)
+       
         loadJson()
     }
     
     func configUiTop(){
-        
         view.addSubview(uiView_Top)
         uiView_Top.translatesAutoresizingMaskIntoConstraints = false
         uiView_Top.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 0).isActive = true
@@ -221,7 +219,6 @@ class ViewController: UIViewController {
         lbl_humidity1.font = UIFont.systemFont(ofSize: 14)
     }
     
-    
     func configCollectionView(){
         uiView_Top.addSubview(collectionView)
         collectionView.showsHorizontalScrollIndicator = false
@@ -286,67 +283,33 @@ class ViewController: UIViewController {
 
     }
     func loadJson(){
-        let queue = DispatchGroup()
-        queue.enter()
-        URLSession.shared.dataTask(with: URL(string: urlApiDaily)!) { data, response, errors in
+        URLSession.shared.dataTask(with: URL(string: urlApi)!) { data, response, errors in
             do{
-                let dataD = try JSONDecoder().decode(DailyWeather.self, from: data!)
-                for i in 0..<dataD.list.count{
-                    self.dataDaily.append(dataD.list[i])
-                }
+                let dataD = try JSONDecoder().decode(WeatherModel.self, from: data!)
+                self.timeZone = dataD.timezone
+                self.dataCurrent = dataD.current
+                self.dataHour = dataD.hourly
+                self.dataDaily = dataD.daily
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
-                }
-            }catch{
-                print(errors as Any)
-            }
-        }.resume()
-        queue.leave()
-        
-        queue.enter()
-        URLSession.shared.dataTask(with: URL(string: urlApiHour)!) { data, response, errors in
-            do{
-                let dataH = try JSONDecoder().decode(HourWeather.self, from: data!)
-                    for i in 0..<dataH.list.count{
-                        self.dataHour.append(dataH.list[i])
-                    }
-                DispatchQueue.main.async {
                     self.collectionView.reloadData()
+                    if let data = self.dataCurrent{
+                        self.configUI(data)
+                    }
                 }
             }catch{
                 print(errors as Any)
             }
         }.resume()
-        queue.leave()
-        
-        queue.enter()
-        URLSession.shared.dataTask(with: URL(string: urlApiCurrent)!) { data, response, errors in
-            do{
-                let dataC = try? JSONDecoder().decode(CurrentWeather.self, from: data!)
-                self.dataCurrent = dataC
-                DispatchQueue.main.async {
-                    self.configUI(self.dataCurrent!)
-                }
-            }
-            catch{
-                print(errors as Any)
-            }
-        }.resume()
-        queue.leave()
-        
-        queue.notify(queue: .main) {
-            print("Done")
-        }
-       
     }
-    func configUI(_ data: CurrentWeather){
+    func configUI(_ data: Current){
         img_statS.image = UIImage(named: data.weather[0].icon)
-        lbl_dateS.text = data.dt.formatDate()
-        lbl_wind.text = data.wind.speed.formatWindKh()
-        lbl_humidity.text = data.main.humidity.formatHumidity()
-        lbl_pressure.text = data.main.pressure.formatMbar()
-        lbl_tempS.text = data.main.temp.formatTempC()
-        lbl_statS.text = data.weather[0].description.capitalized
+        lbl_dateS.text = data.dt.formatDate(timeZone)
+        lbl_wind.text = data.windSpeed.formatWindMs()
+        lbl_humidity.text = data.humidity.formatHumidity()
+        lbl_pressure.text = data.pressure.formatMbar()
+        lbl_tempS.text = data.temp.formatTempC()
+        lbl_statS.text = data.weather[0].weatherDescription.capitalized
     }
 }
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -355,7 +318,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellCHour", for: indexPath) as! HourCollectionViewCell
-        cell.setHour(dataHour[indexPath.row])
+        cell.setHour(dataHour[indexPath.row], timeZone, indexPath.row)
         return cell
     }
 }

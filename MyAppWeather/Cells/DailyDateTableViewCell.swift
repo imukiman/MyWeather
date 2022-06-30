@@ -23,7 +23,7 @@ class DailyDateTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setList(_ data : ListD){
+    func setList(_ data : Daily){
         lblTemP.font = UIFont.systemFont(ofSize: 16)
         lblTemP.textColor = .white
         lblDate.textColor = .white

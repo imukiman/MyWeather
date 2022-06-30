@@ -31,7 +31,7 @@ class AllLocationsViewController: UIViewController {
         allLocation = []
         let data = DBManage.shareInstance.readData()
         for i in 0..<data.count{
-            let data = Cities(name: data[i].name, lat: data[i].lat, lng: data[i].lng)
+            let data = Cities(displayName: data[i].name, lat: data[i].lat, lon: data[i].lon)
             allLocation.append(data)
         }
         tableView.reloadData()
@@ -106,7 +106,7 @@ extension AllLocationsViewController: UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellLocation") as! AllLocationTableViewCell
-        cell.lblLocation.text = allLocation[indexPath.row].name
+        cell.lblLocation.text = allLocation[indexPath.row].displayName
         cell.backgroundColor = .clear
         return cell
     }
@@ -118,7 +118,7 @@ extension AllLocationsViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
             -> UISwipeActionsConfiguration? {
                 let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
-                DBManage.shareInstance.deleteAnyObject(code: self.allLocation[indexPath.row].name)
+                DBManage.shareInstance.deleteAnyObject(code: self.allLocation[indexPath.row].displayName)
                 self.allLocation.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
                 completionHandler(true)
@@ -143,9 +143,9 @@ extension AllLocationsViewController: UITableViewDelegate,UITableViewDataSource{
     func swapItem(){
         for i in 0..<allLocation.count{
             let data = Location()
-            data.name = allLocation[i].name
+            data.name = allLocation[i].displayName
             data.lat = allLocation[i].lat
-            data.lng = allLocation[i].lng
+            data.lon = allLocation[i].lon
             DBManage.shareInstance.addData(data)
         }
     }

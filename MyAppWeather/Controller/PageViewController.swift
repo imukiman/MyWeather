@@ -100,7 +100,7 @@ class PageViewController: UIPageViewController {
         }
         for i in 0..<data.count{
             let view = ViewController()
-            view.my_longitude = data[i].lng
+            view.my_longitude = data[i].lon
             view.my_latitude = data[i].lat
             view.name_location = data[i].name
             pages.append(view)

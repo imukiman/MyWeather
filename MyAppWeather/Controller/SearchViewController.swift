@@ -13,20 +13,21 @@ protocol SearchDelegate{
 
 class SearchViewController: UIViewController,UISearchBarDelegate {
     var delegateSearch : SearchDelegate?
-    var cities = [Cities]()
+    var nameCity = ""
     var searchCities = [Cities]()
     var searchBar = UISearchBar()
     var lbl_search = UILabel()
     var topView = UIView()
     var bt_exit = UIButton()
     var tableView = UITableView()
+    var urlSearch : String = ""
     private var pendingRequestWorkItem: DispatchWorkItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         searchBar.delegate = self
-        cities = loadJson(filename: "Cities")!
+        //cities = loadJson(filename: "Cities")!
         // Do any additional setup after loading the view.
         configBlur()
         configTop()
@@ -97,7 +98,7 @@ class SearchViewController: UIViewController,UISearchBarDelegate {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        //blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(blurEffectView)
     }
     
@@ -131,14 +132,30 @@ class SearchViewController: UIViewController,UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchCities = []
+        nameCity = searchText
         pendingRequestWorkItem?.cancel()
-        let requestWorkItem = DispatchWorkItem {
-            for i in 0..<self.cities.count{
-                if self.cities[i].name.lowercased().contains(searchText.lowercased()){
-                    self.searchCities.append(self.cities[i])
-                }
+        let requestWorkItem = DispatchWorkItem { [self] in
+            let convertsearchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            urlSearch = "https://nominatim.openstreetmap.org/search.php?q=\(convertsearchText!)&format=json"
+            guard let dataURl = URL(string: urlSearch) else{
+                return
             }
-            self.tableView.reloadData()
+            URLSession.shared.dataTask(with: dataURl) { data, response, error in
+                if error == nil{
+                    do{
+                        let data1 = try JSONDecoder().decode([Cities].self, from: data!)
+                        self.searchCities = data1
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }catch{
+                        
+                    }
+                }
+                else{
+                    print(error!)
+                }
+            }.resume()
         }
         pendingRequestWorkItem = requestWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500),
@@ -153,7 +170,7 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellSearch", for: indexPath) as! SearchTableViewCell
-        cell.lbl_title.text = searchCities[indexPath.row].name
+        cell.lbl_title.text = searchCities[indexPath.row].displayName
         cell.lbl_title.textColor = .black
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
@@ -161,9 +178,9 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = Location()
-        item.name = searchCities[indexPath.row].name
+        item.name = searchCities[indexPath.row].displayName.cutComma()
         item.lat = searchCities[indexPath.row].lat
-        item.lng = searchCities[indexPath.row].lng
+        item.lon = searchCities[indexPath.row].lon
         
         DBManage.shareInstance.checkPrimaryKey(location: item)
         delegateSearch?.changeData()

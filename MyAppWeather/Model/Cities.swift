@@ -6,8 +6,13 @@
 //
 
 import Foundation
-struct Cities: Decodable{
-    let name: String
-    let lat: String
-    let lng: String
+struct Cities: Codable{
+    let displayName: String
+    let lat : String
+    let lon : String
+
+    enum CodingKeys: String, CodingKey {
+        case lat, lon
+        case displayName = "display_name"
+    }
 }

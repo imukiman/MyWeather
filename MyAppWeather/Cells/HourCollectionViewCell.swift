@@ -21,10 +21,15 @@ class HourCollectionViewCell: UICollectionViewCell {
         lblHour.font = .boldSystemFont(ofSize: 17)
     }
     
-    func setHour(_ data : ListH){
-        lblHour.text = data.dt.formatTime()
+    func setHour(_ data : Hourly, _ timeZone: String, _ indexPath : Int){
+        if indexPath == 0{
+            lblHour.text = "Bây giờ"
+        }
+        else{
+            lblHour.text = data.dt.formatTime(timeZone)
+        }
         imgStats.image = UIImage(named: data.weather[0].icon)
-        lblTemp.text = data.main.temp.formatTempC()
+        lblTemp.text = data.temp.formatTempC()
     }
 
 }

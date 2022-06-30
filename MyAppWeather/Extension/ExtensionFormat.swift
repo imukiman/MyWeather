@@ -13,6 +13,10 @@ extension String{
         let double = Double(self)!
         return double
     }
+    func cutComma() -> String{
+        let arrayString = self.components(separatedBy: ",")
+        return arrayString[0]
+    }
 }
 
 extension Double{
@@ -43,13 +47,13 @@ extension Double{
         return String(format: "%.0f", self) + "%"
     }
     
-    func formatDate() -> String{
+    func formatDate(_ timeZone: String) -> String{
         let timeResult : Double = self
         let date = Date(timeIntervalSince1970: timeResult)
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: Locale.preferredLanguages[0])
         dateFormatter.dateFormat = "EEEE | dd.MM"
-        dateFormatter.timeZone = .current
+        dateFormatter.timeZone = TimeZone(identifier: timeZone)
         let localDate = dateFormatter.string(from: date)
         return localDate
    
@@ -66,13 +70,13 @@ extension Double{
         return localDay
     }
     
-    func formatTime() -> String{
+    func formatTime(_ timeZone: String) -> String{
         let timeResult : Double = self
         let date = Date(timeIntervalSince1970: timeResult)
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: Locale.preferredLanguages[0])
         dateFormatter.dateFormat = "HH:mm"
-        dateFormatter.timeZone = .current
+        dateFormatter.timeZone = TimeZone(identifier: timeZone)
         let localDate = dateFormatter.string(from: date)
         return localDate
     }
